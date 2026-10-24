@@ -9,17 +9,17 @@ In einem Netz von Subunternehmern und Lieferanten ist ein Befall aufgetreten. Er
 
 ## Kernfrage
 
-**Wo hat es angefangen, und wo geht es nicht mehr?** Der Hook ist ein **Grenzenbefund**: auf der Linie versagt der Schätzer (der Satz von Shah und Zaman), in Netzen mit stark schwankendem Grad trifft er die Quelle nicht über Zufall, aber der Schätzer liegt näher an ihr, und **mehr Befallene verschlechtern die Treffer**.
+**Wo hat es angefangen, und wo geht es nicht mehr?** Der Hook ist ein **Grenzenbefund**: auf der Linie versagt der Schätzer (der Satz von Shah und Zaman), in Netzen mit stark schwankendem Grad trifft die Rumor Centrality die Quelle nicht über Zufall (das Jordan-Zentrum im skalenfreien Netz bei 10 % etwa 1,6-fach), aber der Schätzer liegt näher an ihr, und **mehr Befallene verschlechtern die Treffer** (bei 250 Knoten).
 
 ## Befunde und Korrekturen gegenüber dem Plan
 
 - **Auf Bäumen sind Rumor Centrality und Distanzzentralität dasselbe Maß** (gleiche Kandidaten in jeder Zelle der Messung; die Vermutung im Gesamtplan, sie nacheinander gegeneinander antreten zu lassen, entfällt dort). Die Rumor Centrality zählt genau die Reihenfolgen, in denen der Befall von einem Kandidaten aus die Menge erreichen kann (Zählung aller Reihenfolgen auf 60 Zufallsbäumen bestätigt).
-- **Der Satz zur Linie stimmt:** auf der Linie fällt die Trefferquote der Rumor Centrality von 25,7 % bei 10 auf 6,2 % bei 200 Befallenen (etwa wie 1/√*n*), bei Verzweigung *d* = 3 von 32,2 % auf 23,3 %, bei *d* = 4 und 5 bleibt sie bei 27,3 % bzw. 28,1 %: ab *d* = 3 eine feste Größe.
+- **Der Satz zur Linie stimmt:** auf der Linie fällt die Trefferquote der Rumor Centrality von 25,7 % bei 10 auf 6,2 % bei 200 Befallenen (etwa wie 1/√*n*), bei Verzweigung *d* = 3 von 32,2 % auf 23,3 %, bei *d* = 4 und 5 bleibt sie bei 27,3 % bzw. 28,1 %: ab *d* = 3 bleibt sie bei etwa einem Viertel bis einem Drittel.
 - **Rumor Centrality ist auf Netzen mit Kreisen nicht besser als die Distanzzentralität** (Plan-Vermutung nach der Simulation bei Shah und Zaman nicht bestätigt): bei 30 % Befallenen trifft die Distanz im Zufallsnetz 6,3 % gegen 4,9 %, im Gitter 5,5 % gegen 3,0 %, im Ring mit Abkürzungen **7,9 % gegen 2,6 %** (BFS-Baum je Kandidat als Näherung).
 - **Quelle in heavy-tailed Netzen:** die Trefferquote liegt bei Zufall oder darunter (Potenzgesetz-Netz bei 10 % befallen: Rumor Centrality **0,4 %** gegen 4,0 % bei Zufall, weil sie Hubs wählt), der **Abstand** zur Quelle ist aber deutlich kleiner als bei Zufall (skalenfrei 1,77 gegen 2,33).
-- **Mehr Befallene helfen nicht, die Trefferquote fällt:** im Zufallsnetz von 26,5 % bei 10 auf 1,0 % bei 150 Befallenen (Abstand 1,07 → 2,68), im Ring von 21,1 % auf 0,1 % (Abstand 0,92 → 4,22). Der Plan fragte „ab welcher Größe ist die Quelle erkennbar“; die Richtung war falsch.
+- **Mehr Befallene (bei 250 Knoten) verbessern die Trefferquote nicht, sie sinkt:** im Zufallsnetz von 26,5 % bei 10 auf 1,0 % bei 150 Befallenen (Abstand 1,07 → 2,68), im Ring von 21,1 % auf 0,1 % (Abstand 0,92 → 4,22). Der Plan fragte „ab welcher Größe ist die Quelle erkennbar“; die Richtung war falsch.
 - **Auch das Bayes-Optimum verfehlt die Quelle meist:** auf kleinen Netzen (9 Betriebe) trifft es mit 4 bis 6 Befallenen 43,5 % bis 30,8 %, die Rumor Centrality 29,3 % bis 19,7 %, Zufall 25,0 % bis 16,7 %.
-- **Fehlende Beobachtungen zerlegen die Menge:** bei 80 % bzw. 50 % beobachteten Befallenen bleiben im Zufallsnetz 96 % bzw. 66 % der Beobachteten in der größten zusammenhängenden Gruppe; die Trefferquote fällt von 6,2 % auf 2,6 % bzw. 3,2 %.
+- **Fehlende Beobachtungen zerlegen die Menge:** bei 80 % bzw. 50 % beobachteten Befallenen bleiben im Zufallsnetz 96 % bzw. 66 % der Beobachteten in der größten zusammenhängenden Gruppe. Die Quelle liegt oft nicht in der ausgewerteten Gruppe (bei 50 % Beobachtung in 41 % der Läufe); die Trefferquote fällt dadurch von 6,2 % auf 2,6 % bzw. 3,2 %.
 - **Rundungsfehler bei Gleichständen:** das Runden auf feste Stellen trennt zwei mathematisch gleiche Zentren (ln *R* weicht um etwa 1e-11 ab) und ließ Rumor Centrality und Distanz auf 3-regulären Bäumen scheinbar abweichen (40 von 3 000 Bäumen); jetzt gilt eine relative Toleranz (Regressionstest).
 
 ## Modell
@@ -46,7 +46,7 @@ Alle Zahlen stehen in `tests/test_claims.py`. Netze der Messreihen: die acht fes
 | **Stimmen die Bausteine?** | *R*(*v*) stimmt auf 60 Zufallsbäumen mit 3 bis 8 Knoten für jede Wurzel mit der **Zählung aller Infektionsreihenfolgen** überein; das Umwurzeln mit der Neuberechnung je Wurzel und auf 100 Bäumen mit der Gleichheit der Kandidaten von Rumor Centrality und Distanz; Abstandssummen und Exzentrizitäten mit `networkx` (30 Netze); die exakten Wahrscheinlichkeiten der befallenen Mengen (Teilmengen-Rechnung) mit der Häufigkeit aus 30 000 Wachstumsläufen; die Trefferwahrscheinlichkeit der Rumor Centrality aus der exakten Rechnung mit der Simulation (20 000 Läufe, Band 0,012); Bayes ≥ jeder Schätzer, Zufall = 1/*n*<sub>I</sub> exakt (`tests/test_oracle_quellensuche.py`) |
 | **Satz zur Linie** | Tabelle zu Experiment 1 |
 | **Wo trifft die Quelle über Zufall?** | Tabellen zu Experiment 2: bei 10 % befallen im Zufallsnetz 15,1 % (Rumor Centrality) bzw. 17,5 % (Distanz) gegen 4,1 % bei Zufall, in Verbünden 16,1 % bzw. 16,8 % gegen 4,0 %; im Potenzgesetz-Netz und im skalenfreien Netz kein Schätzer über dem 1,5-Fachen von Zufall bei 30 % |
-| **Helfen mehr Befallene?** | Nein (Tabelle zu Experiment 3) |
+| **Helfen mehr Befallene?** | Nein, bei 250 Knoten sinkt die Trefferquote (Tabelle zu Experiment 3) |
 | **Was bei fehlenden Beobachtungen?** | Tabelle zu Experiment 4 |
 | **Wie gut kann eine Schätzung sein?** | Tabelle zu Experiment 5 |
 | **Standardlauf (Zufallsnetz, n = 150, Seed 35)** | 450 Kanten; 30 befallen; Treffer Rumor Centrality 0,00, Distanz 0,00, Jordan 0,00; Abstand 1,00 / 2,00 / 2,00, Zufall 2,43; Rang der Quelle 3 / 5 / 4 |
@@ -173,10 +173,10 @@ Das Jordan-Zentrum trifft bei Verzweigung ab 3 seltener (Prozent):
 | H2 | Auf Bäumen sind Rumor Centrality und Distanzzentralität dasselbe Maß | ✅ gleiche Kandidaten in jeder Zelle (20 Zellen mit je 1 000 Läufen); Voraussetzung ist die Toleranz bei Gleichständen |
 | H3 | Satz nach Shah und Zaman: auf der Linie geht die Trefferquote gegen 0, bei schnellerem Wachstum bleibt sie positiv | ✅ Linie 25,7 % → 6,2 %, *d* ≥ 3 bleibt bei 23,3 % bis 28,1 % bei 200 Befallenen |
 | H4 | Rumor Centrality schlägt Distanzzentralität auf allgemeinen Netzen | ❌ bei 30 % befallen in allen sechs Netztypen nicht besser, im Ring 2,6 % gegen 7,9 % |
-| H5 | In Netzen mit stark schwankendem Grad ist die Quelle erkennbar | ❌ Treffer nicht über Zufall (Potenzgesetz 0,4 % gegen 4,0 %), aber Abstand kleiner (1,58 gegen 2,23) |
+| H5 | In Netzen mit stark schwankendem Grad ist die Quelle erkennbar | ❌ Rumor Centrality nicht über Zufall (Potenzgesetz 0,4 % gegen 4,0 %; das Jordan-Zentrum im skalenfreien Netz bei 10 % 1,6-fach), aber Abstand kleiner (1,58 gegen 2,23) |
 | H6 | Der Bayes-Schätzer liegt weit über den Heuristiken | ⚠ 43,5 % gegen 29,3 % (Rumor Centrality) und 25,0 % (Zufall) bei 4 Befallenen; nur 9 Betriebe |
-| H7 | Mit mehr Befallenen steigt die Trefferquote | ❌ sie fällt (Zufallsnetz 26,5 % → 1,0 %) |
-| H8 | Fehlende Beobachtungen verschlechtern die Schätzung | ✅ die Menge zerfällt (66 % bzw. 58 % der Beobachteten bei 50 % in der größten Gruppe), die Trefferquote fällt; das Maß ist dafür nicht gebaut |
+| H7 | Mit mehr Befallenen steigt die Trefferquote | ❌ sie fällt bei 250 Knoten (Zufallsnetz 26,5 % → 1,0 %) |
+| H8 | Fehlende Beobachtungen verschlechtern die Schätzung | ✅ die Menge zerfällt (66 % bzw. 58 % der Beobachteten bei 50 % in der größten Gruppe), die Trefferquote fällt (auch weil die Quelle oft nicht in der ausgewerteten Gruppe liegt); das Maß ist dafür nicht gebaut |
 
 ## Ehrliche Grenzen
 

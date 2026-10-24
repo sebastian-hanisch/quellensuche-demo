@@ -107,7 +107,7 @@ st.markdown(
     """
 **Achtes Stück** der Reihe „Netzwerkanalyse“, im Ausbreitungs-Arm das **inverse Problem** zu den Stücken 5 bis 7: dort war die Quelle gegeben und der Verlauf gesucht, hier ist der Endzustand gegeben und die **Quelle** gesucht. In einem Netz von Subunternehmern und Lieferanten ist ein **Befall** aufgetreten (Schadsoftware, ein Qualitätsproblem). Sie sehen, welche Betriebe befallen sind, aber nicht, wo es angefangen hat. Die Demo stellt die **Rumor Centrality** (Shah und Zaman 2011) der **Distanzzentralität**, dem **Jordan-Zentrum** und dem **Zufallstipp** gegenüber; die [Kaskaden-Demo](https://sebastianhanisch-kaskaden-demo.streamlit.app/) rechnet die Ausbreitung in Vorwärtsrichtung.
 
-Die Kernfrage: **Wo hat es angefangen, und wo geht es nicht mehr?** Der Hook ist ein **Grenzenbefund**, kein Verfahrenserfolg: auf der Linie versagt der Schätzer, in Netzen mit stark schwankendem Grad trifft er die Quelle kaum über Zufall, und **mehr Befallene helfen nicht**. Die Ergebnisse sind **Modellbefunde**, keine Aussagen über die Wirklichkeit.
+Die Kernfrage: **Wo hat es angefangen, und wo geht es nicht mehr?** Der Hook ist ein **Grenzenbefund**, kein Verfahrenserfolg: auf der Linie versagt der Schätzer, in Netzen mit stark schwankendem Grad trifft er die Quelle kaum über Zufall, und **mehr Befallene (bei 250 Knoten) helfen nicht**. Die Ergebnisse sind **Modellbefunde**, keine Aussagen über die Wirklichkeit.
 
 Weiter unten: fünf Experimente (**🔬**), der Abschnitt **🚧 Wo die Annahmen enden** und der Expander **📐 Mathematische Formulierung**.
 """
